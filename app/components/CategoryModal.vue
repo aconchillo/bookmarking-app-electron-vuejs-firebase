@@ -1,6 +1,6 @@
 <template>
 
-  <div id="cat-modal" class="ui small modal">
+  <div id="category-modal" class="ui small modal">
     <i class="close icon"></i>
     <div class="header">
       Add a new category
@@ -16,9 +16,8 @@
           <label>Category color</label>
           <select v-model="catColor" class="ui simple dropdown">
             <option value="">Select a color</option>
-            <option v-for="color in categoryColors"
-              value="{{color}}">
-              {{color | capitalize}}
+            <option v-for="color in categoryColors" :value="color">
+              {{capitalize(color)}}
             </option>
           </select>
         </div>
@@ -47,24 +46,17 @@
     },
 
     methods: {
-
+      capitalize (name) {
+        return name.replace(/\b\w/g, function(l){ return l.toUpperCase() })
+      },
       addCategory () {
         var newCategory = {}
         newCategory[this.catName] = this.catColor
         store.addCategory(newCategory)
-        $('#cat-modal').modal('hide')
+        $('#category-modal').modal('hide')
       }
 
     },
-
-    events: {
-
-      'add-category': function () {
-        this.catName = this.catColor = ''
-        $('#cat-modal').modal('show')
-      }
-
-    }
 
   }
 </script>

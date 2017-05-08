@@ -8,21 +8,30 @@ module.exports = {
     filename: 'build.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        use: {
+          loader: 'vue-loader',
+        }
       },
       {
         test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015'],
+            plugins: ['transform-runtime']
+          }
+        }
       }
     ]
   },
-  babel: {
-    "presets": ["es2015"],
-    "plugins": ["transform-runtime"]
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.js'
+    }
   },
   plugins: [
     new webpack.ExternalsPlugin('commonjs', [

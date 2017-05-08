@@ -5,7 +5,7 @@
       <a class="header">{{title}}</a>
       <div class="description">
         {{url}}
-        <a class="ui {{categoryColor}} tiny label right-float">{{category}}</a>
+        <a :class="'ui tiny label right-float ' + categoryColor">{{category}}</a>
       </div>
     </div>
   </div>

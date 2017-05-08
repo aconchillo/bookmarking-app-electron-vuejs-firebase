@@ -20,8 +20,8 @@
           <label>Bookmark category</label>
           <select v-model="bookmarkCategory" class="ui simple dropdown">
             <option value="">Select a category</option>
-            <template v-for="(name, color) in categories">
-              <option value="{{ name }}">{{ name }}</option>
+            <template v-for="(color, name) in categories">
+              <option :value="name">{{ name }}</option>
             </template>
           </select>
         </div>
@@ -63,15 +63,6 @@
       }
 
     },
-
-    events: {
-
-      'add-bookmark': function () {
-        this.bookmarkTitle = this.bookmarkUrl = this.bookmarkCategory = ''
-        $('#bookmark-modal').modal('show')
-      }
-
-    }
 
   }
 </script>

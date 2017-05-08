@@ -6,7 +6,7 @@
       <!-- bind 'selected-category event to the event handler setSelectedCategory' -->
     </sidebar>
     <bookmark-list
-      :bookmarks="bookmarks | filterByCategory selectedCategory"
+      :bookmarks="filteredBookmarks()"
       :categories="categories">
     </bookmark-list>
   </div>
@@ -49,7 +49,11 @@
 
       setSelectedCategory (category) {
         this.selectedCategory = category;
-      }
+      },
+
+      filteredBookmarks () {
+        return filterByCategory(this.bookmarks, this.selectedCategory);
+      },
 
     }
 

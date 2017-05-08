@@ -7,7 +7,8 @@
       </div>
     </div>
     <div class="ui relaxed divided selection list">
-      <bookmark v-for="(id, bookmark) in bookmarks | filterByTitle query"
+      <bookmark v-for="(bookmark, id) in filteredBookmarks()"
+        :key="id"
         :id="id"
         :title="bookmark.title"
         :url="bookmark.url"
@@ -36,8 +37,10 @@
       Bookmark
     },
 
-    filters: {
-      filterByTitle
+    methods: {
+      filteredBookmarks () {
+        return filterByTitle(this.bookmarks, this.query);
+      },
     }
 
   }

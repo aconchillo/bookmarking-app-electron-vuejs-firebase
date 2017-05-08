@@ -1,22 +1,33 @@
 import { EventEmitter } from 'events'
 import Firebase from 'firebase'
 
-// ENTER YOUR FIREBASE URL BELOW
-const db = new Firebase("https://YOUR_FIREBASE_APP.firebaseio.com/")
-const categoriesRef = db.child('categories')
-const bookmarksRef = db.child('bookmarks')
-const store = new EventEmitter()
+// Initialize Firebase
+var config = {
+  apiKey: "...",
+  authDomain: "...",
+  databaseURL: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "..."
+};
+
+let app = Firebase.initializeApp(config)
+let db = app.database()
+let categoriesRef = db.ref('categories')
+let bookmarksRef = db.ref('bookmarks')
+let store = new EventEmitter()
 
 let categories = {}
 let bookmarks = {}
 
-db.on('value', (snapshot) => {
-  var bookmarkData = snapshot.val()
-  if (bookmarkData) {
-    categories = bookmarkData.categories
-    bookmarks = bookmarkData.bookmarks
-    store.emit('data-updated', categories, bookmarks)
-  }
+categoriesRef.on('value', (snapshot) => {
+  categories = snapshot.val()
+  store.emit('data-updated', categories, bookmarks)
+})
+
+bookmarksRef.on('value', (snapshot) => {
+  bookmarks = snapshot.val()
+  store.emit('data-updated', categories, bookmarks)
 })
 
 store.addCategory = (category) => {

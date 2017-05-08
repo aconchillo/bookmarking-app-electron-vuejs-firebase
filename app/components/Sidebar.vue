@@ -17,9 +17,9 @@
               <span @click="categorySelected('')">All</span>
             </div>
           </div>
-          <div v-for="(name, color) in categories" class="item clickable">
+          <div v-for="(color, name) in categories" class="item clickable">
             <div class="content">
-              <a class="ui {{ color }} empty circular label"></a>
+              <a :class="'ui empty circular label ' + color"></a>
               <span @click="categorySelected(name)"
                 :class="{selected: selectedCategory === name}">
                 {{ name }}
@@ -40,7 +40,6 @@
     <bookmark-modal :categories="categories"></bookmark-modal>
   </div>
 </template>
-
 
 <script>
   import store from '../store'
@@ -65,11 +64,11 @@
     methods: {
 
       addBookmark () {
-        this.$broadcast('add-bookmark')
+        $('#bookmark-modal').modal('show')
       },
 
       addCategory () {
-        this.$broadcast('add-category')
+        $('#category-modal').modal('show')
       },
 
       deleteCategory (category) {
@@ -78,8 +77,8 @@
 
       categorySelected (category) {
         this.selectedCategory = category
-        this.$dispatch('category-selected', category)
-      }
+        this.$emit('category-selected', category)
+      },
 
     }
 
